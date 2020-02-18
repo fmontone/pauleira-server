@@ -36,12 +36,12 @@ routes.put(
 // SESSION
 // ***EXPRESS-BRUTE PREJUDICES JEST TESTS***
 
-if (process.env.NODE_ENV === 'test' || process.env.NODE_ENV === 'development') {
-  routes.post('/session', SessionController.store);
-} else {
+if (process.env.NODE_ENV === 'production') {
   const bruteStore = new BruteRedis(redisConfig);
   const bruteForce = new Brute(bruteStore);
   routes.post('/session', bruteForce.prevent, SessionController.store);
+} else {
+  routes.post('/session', SessionController.store);
 }
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
