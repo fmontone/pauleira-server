@@ -7,7 +7,9 @@ class ProfileImageController {
     const image = await ProfileImage.findOne({ where: { user_id } });
 
     if (!image) {
-      return res.status(400).json('This user does not have a profile image');
+      return res
+        .status(400)
+        .json({ message: 'This user does not have a profile image' });
     }
 
     return res.json(image);
@@ -33,7 +35,7 @@ class ProfileImageController {
     const image = await ProfileImage.findOne({ where: { user_id } });
 
     if (!image) {
-      return res.status(400).json('Profile Image not found');
+      return res.status(400).json({ message: 'Profile Image not found' });
     }
 
     await image.destroy();

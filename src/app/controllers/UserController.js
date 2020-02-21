@@ -1,15 +1,24 @@
 import User from '../models/User';
+import ProfileImage from '../models/ProfileImage';
 
 class UserController {
   async index(req, res) {
-    const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
+    const users = await User.findAll({
+      attributes: ['id', 'name', 'email', 'a_k_a'],
+      include: [
+        { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
+      ],
+    });
 
     return res.json(users);
   }
 
   async show(req, res) {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'email'],
+      attributes: ['id', 'name', 'email', 'a_k_a'],
+      include: [
+        { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
+      ],
     });
 
     if (!user) return res.status(400).json({ error: 'User does not exists' });

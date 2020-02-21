@@ -41,7 +41,10 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.ProfileImage, { foreignKey: 'user_id', as: 'user' });
+    this.hasOne(models.ProfileImage, {
+      foreignKey: 'user_id',
+      as: 'profile_image',
+    });
   }
 }
 
