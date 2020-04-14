@@ -1,6 +1,4 @@
 import { Router } from 'express';
-import Brute from 'express-brute';
-import BruteRedis from 'express-brute-redis';
 import multer from 'multer';
 import multerProfileConfig from './config/multerProfile';
 import multerGalleryConfig from './config/multerGallery';
@@ -17,7 +15,6 @@ import validateUserUpdate from './app/validators/UserUpdate';
 import validateGalleryStore from './app/validators/GalleryStore';
 import validateGalleryUpdate from './app/validators/GalleryUpdate';
 
-import redisConfig from './config/redis';
 import AuthMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
@@ -36,13 +33,7 @@ routes.put(
 // SESSION
 // ***EXPRESS-BRUTE PREJUDICES JEST TESTS***
 
-if (process.env.NODE_ENV === 'production') {
-  const bruteStore = new BruteRedis(redisConfig);
-  const bruteForce = new Brute(bruteStore);
-  routes.post('/session', bruteForce.prevent, SessionController.store);
-} else {
-  routes.post('/session', SessionController.store);
-}
+routes.post('/session', SessionController.store);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
