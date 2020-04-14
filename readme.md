@@ -1,6 +1,6 @@
 # Pauleira Server
 
-This is a RESTful API developed to serve pauleira.com.br website.
+This is a RESTful API developed to serve pauleira.com.br website and it's under development right now!
 
 For now, it's a very basic API that will grow up over time and by the time I start to implemente real business rules it will become a private repo.
 
