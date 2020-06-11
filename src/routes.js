@@ -24,14 +24,18 @@ const uploadGallery = multer(multerGalleryConfig);
 
 // OPEN ROUTES
 
-// 1. GalleryLikes | UPDATE
+// 1. Gallery | INDEX
+routes.get('/galleries', GalleryController.index);
+// 2. Gallery | SHOW
+routes.get('/galleries/:id', GalleryController.show);
+
+// 3. GalleryLikes | UPDATE
 routes.put(
   '/galleries/:gallery_id/likes/:total_likes',
   GalleryLikeController.update
 );
 
 // SESSION
-// ***EXPRESS-BRUTE PREJUDICES JEST TESTS***
 
 routes.post('/session', SessionController.store);
 
@@ -65,15 +69,11 @@ routes.get('/users/:user_id/profile-img', ProfileImageController.show);
 // 2. Avatar | DELETE
 routes.delete('/users/:user_id/profile-img', ProfileImageController.delete);
 
-// 1. Gallery | INDEX
-routes.get('/galleries', GalleryController.index);
-// 2. Gallery | SHOW
-routes.get('/galleries/:id', GalleryController.show);
-// 3. Gallery | STORE
+// 1. Gallery | STORE
 routes.post('/galleries', validateGalleryStore, GalleryController.store);
-// 4. Gallery | UPDATE
+// 2. Gallery | UPDATE
 routes.put('/galleries/:id', validateGalleryUpdate, GalleryController.update);
-// 5. Gallery | DELETE
+// 3. Gallery | DELETE
 routes.delete('/galleries/:id', GalleryController.delete);
 
 // 1. GalleryImage | INDEX
