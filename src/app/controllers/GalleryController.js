@@ -4,7 +4,19 @@ import User from '../models/User';
 
 class GalleryController {
   async index(req, res) {
-    const response = await Gallery.findAll();
+    const response = await Gallery.findAll({
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['name', 'a_k_a'],
+        },
+        {
+          model: GalleryImage,
+          as: 'images',
+        },
+      ],
+    });
 
     return res.json(response);
   }

@@ -4,7 +4,7 @@ import ProfileImage from '../models/ProfileImage';
 class UserController {
   async index(req, res) {
     const users = await User.findAll({
-      attributes: ['id', 'name', 'email', 'a_k_a'],
+      attributes: ['id', 'name', 'email', 'a_k_a', 'role', 'created_at'],
       include: [
         { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
       ],
@@ -15,7 +15,7 @@ class UserController {
 
   async show(req, res) {
     const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'email', 'a_k_a'],
+      attributes: ['id', 'name', 'email', 'a_k_a', 'role', 'created_at'],
       include: [
         { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
       ],
