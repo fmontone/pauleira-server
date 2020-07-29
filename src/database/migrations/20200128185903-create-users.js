@@ -16,6 +16,8 @@ module.exports = {
       role: {
         type: Sequelize.STRING,
         allowNull: false,
+        default: 'student',
+        enum: ['admin', 'student', 'instructor', 'partner'],
       },
       email: {
         type: Sequelize.STRING,

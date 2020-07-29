@@ -16,8 +16,7 @@ class Gallery extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' }); // User who registered the gallery
-    this.belongsTo(models.User, { foreignKey: 'made_by', as: 'madeBy' });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
     this.hasMany(models.GalleryImage, {
       foreignKey: 'gallery_id',
       as: 'images',

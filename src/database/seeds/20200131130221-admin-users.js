@@ -14,8 +14,8 @@ module.exports = {
           updated_at: new Date(),
         },
         {
-          name: 'Paula Bifulco',
-          email: 'pauleira@gmail.com',
+          name: 'Admin',
+          email: 'admin@mail.com',
           role: 'admin',
           password_hash: bcrypt.hashSync('123456', 8),
           created_at: new Date(),

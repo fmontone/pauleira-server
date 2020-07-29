@@ -10,6 +10,9 @@ export default async (req, res, next) => {
       password: Yup.string()
         .required()
         .min(6),
+      role: Yup.string()
+        .oneOf(['admin', 'student', 'instructor', 'partner'])
+        .required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });
