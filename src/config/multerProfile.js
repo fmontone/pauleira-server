@@ -9,8 +9,8 @@ const storageTypes = {
     destination: (req, file, cb) => {
       const dir =
         process.env.NODE_ENV === 'test'
-          ? resolve(__dirname, '..', '..', '__tests__', 'imgs-profile')
-          : resolve(__dirname, '..', '..', 'uploads', 'profile');
+          ? resolve(__dirname, '..', '..', '__tests__', 'admin-profile-images')
+          : resolve(__dirname, '..', '..', 'uploads', 'admin-profile-images');
 
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
@@ -25,7 +25,7 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3(),
-    bucket: 'pauleiraimages/profile',
+    bucket: 'pauleiraimages/admin-profile-images',
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {

@@ -58,17 +58,37 @@ routes.put(
 // 5. ADMIN Users | DELETE
 routes.delete('/admin-users/:id', AdminUserController.delete);
 
-// 1. Avatar | STORE
+/**
+ *
+ *
+ * Admin Profile Images
+ *
+ *
+ */
+
+// 1. Profile Image | STORE
 routes.post(
   '/admin-users/:user_id/profile-img',
   uploadProfile.single('file'),
   ProfileImageController.store
 );
 
-// 1. Avatar | SHOW
-routes.get('/users/:user_id/profile-img', ProfileImageController.show);
-// 2. Avatar | DELETE
-routes.delete('/users/:user_id/profile-img', ProfileImageController.delete);
+// 1. Profile Image | SHOW
+routes.get('/admin-users/:user_id/profile-img', ProfileImageController.show);
+
+// 2. Profile Image | DELETE
+routes.delete(
+  '/admin-users/:user_id/profile-img',
+  ProfileImageController.delete
+);
+
+/**
+ *
+ *
+ * Admin Galleries
+ *
+ *
+ */
 
 // // 1. Gallery | STORE
 // routes.post('/galleries', validateGalleryStore, GalleryController.store);
