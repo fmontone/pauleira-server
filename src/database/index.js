@@ -2,12 +2,13 @@ import Sequelize from 'sequelize';
 
 import databaseConfig from '../config/database';
 
+import UserAdmin from '../app/models/UserAdmin';
 import User from '../app/models/User';
 import Gallery from '../app/models/Gallery';
 import ProfileImage from '../app/models/ProfileImage';
 import GalleryImage from '../app/models/GalleryImage';
 
-const models = [User, Gallery, ProfileImage, GalleryImage];
+const models = [UserAdmin, User, Gallery, ProfileImage, GalleryImage];
 
 class Database {
   constructor() {

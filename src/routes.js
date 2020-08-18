@@ -4,7 +4,7 @@ import multerProfileConfig from './config/multerProfile';
 import multerGalleryConfig from './config/multerGallery';
 
 import UserController from './app/controllers/UserController';
-import SessionController from './app/controllers/SessionController';
+import SessionAdminController from './app/controllers/SessionAdminController';
 import GalleryController from './app/controllers/GalleryController';
 import GalleryImageController from './app/controllers/GalleryImageController';
 import GalleryLikeController from './app/controllers/GalleryLikeController';
@@ -37,7 +37,7 @@ routes.put(
 
 // SESSION
 
-routes.post('/session', SessionController.store);
+routes.post('/session-admin', SessionAdminController.store);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
