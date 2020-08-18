@@ -1,10 +1,10 @@
-import ProfileImage from '../models/ProfileImage';
+import AdminProfileImage from '../models/AdminProfileImage';
 
-class ProfileImageController {
+class AdminProfileImageController {
   async show(req, res) {
     const { user_id } = req.params;
 
-    const image = await ProfileImage.findOne({ where: { user_id } });
+    const image = await AdminProfileImage.findOne({ where: { user_id } });
 
     if (!image) {
       return res
@@ -16,12 +16,12 @@ class ProfileImageController {
   }
 
   async store(req, res) {
-    const defaultURL = `${process.env.APP_URL}/uploads/profile/${req.file.filename}`;
+    const defaultURL = `${process.env.APP_URL}/uploads/admin-profile/${req.file.filename}`;
 
     const { key: name, location: url = defaultURL } = req.file;
     const { user_id } = req.params;
 
-    const image = await ProfileImage.create({
+    const image = await AdminProfileImage.create({
       name,
       url,
       user_id,
@@ -32,7 +32,7 @@ class ProfileImageController {
 
   async delete(req, res) {
     const { user_id } = req.params;
-    const image = await ProfileImage.findOne({ where: { user_id } });
+    const image = await AdminProfileImage.findOne({ where: { user_id } });
 
     if (!image) {
       return res.status(400).json({ message: 'Profile Image not found' });
@@ -44,4 +44,4 @@ class ProfileImageController {
   }
 }
 
-export default new ProfileImageController();
+export default new AdminProfileImageController();

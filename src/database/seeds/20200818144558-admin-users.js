@@ -3,22 +3,18 @@ const bcrypt = require('bcryptjs');
 module.exports = {
   up: queryInterface => {
     return queryInterface.bulkInsert(
-      'users',
+      'admin_users',
       [
         {
-          name: 'Erwin Shmidt',
-          email: 'erwin@mail.com',
-          a_k_a: 'E.S.W. Luthieria',
-          role: 'student',
+          name: 'Fabio Montone',
+          email: 'montone@gmail.com',
           password_hash: bcrypt.hashSync('123456', 8),
           created_at: new Date(),
           updated_at: new Date(),
         },
         {
-          name: 'André Souza',
-          email: 'andre@mail.com',
-          a_k_a: '6 Fingers Luthieria',
-          role: 'student',
+          name: 'Paula Bifulco',
+          email: 'pauleira@gmail.com',
           password_hash: bcrypt.hashSync('123456', 8),
           created_at: new Date(),
           updated_at: new Date(),
@@ -29,6 +25,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.bulkDelete('users', null, {});
+    return queryInterface.bulkDelete('admin_users', null, {});
   },
 };

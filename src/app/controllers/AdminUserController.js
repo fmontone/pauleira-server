@@ -1,12 +1,12 @@
-import User from '../models/User';
-import ProfileImage from '../models/ProfileImage';
+import AdminUser from '../models/AdminUser';
+import AdminProfileImage from '../models/AdminProfileImage';
 
-class UserController {
+class AdminUserController {
   async index(req, res) {
-    const users = await User.findAll({
-      attributes: ['id', 'name', 'email', 'a_k_a', 'role', 'created_at'],
+    const users = await AdminUser.findAll({
+      attributes: ['id', 'name', 'email', 'created_at'],
       include: [
-        { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
+        { model: AdminProfileImage, as: 'profile_image', attributes: ['url'] },
       ],
     });
 
@@ -14,10 +14,10 @@ class UserController {
   }
 
   async show(req, res) {
-    const user = await User.findByPk(req.params.id, {
-      attributes: ['id', 'name', 'email', 'a_k_a', 'role', 'created_at'],
+    const user = await AdminUser.findByPk(req.params.id, {
+      attributes: ['id', 'name', 'email', 'created_at'],
       include: [
-        { model: ProfileImage, as: 'profile_image', attributes: ['url'] },
+        { model: AdminProfileImage, as: 'profile_image', attributes: ['url'] },
       ],
     });
 
@@ -27,7 +27,9 @@ class UserController {
   }
 
   async store(req, res) {
-    const userExists = await User.findOne({ where: { email: req.body.email } });
+    const userExists = await AdminUser.findOne({
+      where: { email: req.body.email },
+    });
 
     if (userExists) {
       return res
@@ -35,22 +37,22 @@ class UserController {
         .json({ error: 'User Already registered with this e-mail.' });
     }
 
-    const { id, name, email, role } = await User.create(req.body);
+    const { id, name, email } = await AdminUser.create(req.body);
 
-    return res.json({ id, name, email, role });
+    return res.json({ id, name, email });
   }
 
   async update(req, res) {
-    const { name, email, oldPassword, password, a_k_a } = req.body;
+    const { name, email, oldPassword, password } = req.body;
 
-    const user = await User.findByPk(req.params.id);
+    const user = await AdminUser.findByPk(req.params.id);
 
     if (!user) {
       return res.status(401).json({ error: 'User not found.' });
     }
 
     if (email) {
-      const emailExists = await User.findOne({
+      const emailExists = await AdminUser.findOne({
         where: { email: req.body.email },
       });
 
@@ -71,7 +73,6 @@ class UserController {
       name,
       email,
       password,
-      a_k_a,
     });
 
     return res.json({ message: 'User successfuly updated' });
@@ -79,16 +80,16 @@ class UserController {
 
   async delete(req, res) {
     const { id } = req.params;
-    const user = await User.findByPk(id);
+    const user = await AdminUser.findByPk(id);
 
     if (!user) {
       return res.status(400).json({ error: 'User not found' });
     }
 
-    User.destroy({ where: { id } });
+    AdminUser.destroy({ where: { id } });
 
     return res.json({ message: 'User successfully deleted' });
   }
 }
 
-export default new UserController();
+export default new AdminUserController();

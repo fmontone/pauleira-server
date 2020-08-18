@@ -3,16 +3,14 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import authConfig from '../../config/auth';
 
-class User extends Model {
+class AdminUser extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
-        a_k_a: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        role: Sequelize.STRING,
       },
       {
         sequelize,
@@ -41,11 +39,11 @@ class User extends Model {
   }
 
   static associate(models) {
-    this.hasOne(models.ProfileImage, {
+    this.hasOne(models.AdminProfileImage, {
       foreignKey: 'user_id',
       as: 'profile_image',
     });
   }
 }
 
-export default User;
+export default AdminUser;
