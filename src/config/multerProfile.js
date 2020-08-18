@@ -18,7 +18,7 @@ const storageTypes = {
       cb(null, dir);
     },
     filename: (req, file, cb) => {
-      file.key = `${Date.now().toString()}-${file.originalname}`;
+      file.key = `${Date.now().toString()}-ad_user-${req.params.user_id}`;
 
       return cb(null, file.key);
     },
@@ -29,7 +29,7 @@ const storageTypes = {
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
-      file.key = `${Date.now().toString()}-user-${req.params.user_id}`;
+      file.key = `${Date.now().toString()}-ad_user-${req.params.user_id}`;
 
       return cb(null, file.key);
     },
