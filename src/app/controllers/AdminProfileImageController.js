@@ -54,7 +54,7 @@ class AdminProfileImageController {
     if (profileImage && process.env.STORAGE_TYPE === 's3') {
       const s3 = new aws.S3();
 
-      await s3.deleteObjects(
+      s3.deleteObjects(
         {
           Bucket: process.env.S3_IMAGES_BUCKET,
           Delete: {
