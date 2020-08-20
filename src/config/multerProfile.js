@@ -25,7 +25,7 @@ const storageTypes = {
   }),
   s3: multerS3({
     s3: new aws.S3(),
-    bucket: 'pauleiraimages/admin-profile-images',
+    bucket: `${process.env.S3_IMAGES_BUCKET}/admin-profile-images`,
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
