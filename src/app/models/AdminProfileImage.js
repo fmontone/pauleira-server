@@ -6,7 +6,7 @@ import aws from 'aws-sdk';
 
 const s3 = new aws.S3();
 
-class ProfileImage extends Model {
+class AdminProfileImage extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -15,15 +15,16 @@ class ProfileImage extends Model {
       },
       {
         hooks: {
-          beforeDestroy: (image, options) => { // eslint-disable-line
+          beforeDestroy: image => {
             if (process.env.STORAGE_TYPE === 's3') {
               return s3
                 .deleteObject({
-                  Bucket: 'pauleiraimages/profile',
+                  Bucket: 'pauleiraimages/admin-profile-images',
                   Key: image.name,
                 })
                 .promise();
             }
+
             return promisify(fs.unlink)(
               path.resolve(
                 __dirname,
@@ -31,7 +32,7 @@ class ProfileImage extends Model {
                 '..',
                 '..',
                 'uploads',
-                'profile',
+                'admin-profile-images',
                 image.name
               )
             );
@@ -45,8 +46,11 @@ class ProfileImage extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.AdminUser, {
+      foreignKey: 'user_id',
+      as: 'user',
+    });
   }
 }
 
-export default ProfileImage;
+export default AdminProfileImage;

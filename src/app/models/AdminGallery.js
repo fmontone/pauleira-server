@@ -1,6 +1,6 @@
 import Sequelize, { Model } from 'sequelize';
 
-class Gallery extends Model {
+class AdminGallery extends Model {
   static init(sequelize) {
     super.init(
       {
@@ -16,13 +16,12 @@ class Gallery extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' }); // User who registered the gallery
-    this.belongsTo(models.User, { foreignKey: 'made_by', as: 'madeBy' });
-    this.hasMany(models.GalleryImage, {
+    this.belongsTo(models.AdminUser, { foreignKey: 'user_id', as: 'user' });
+    this.hasMany(models.AdminGalleryImage, {
       foreignKey: 'gallery_id',
       as: 'images',
     });
   }
 }
 
-export default Gallery;
+export default AdminGallery;

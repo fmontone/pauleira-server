@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 
-import User from '../models/User';
+import AdminUser from '../models/AdminUser';
 
 import authConfig from '../../config/auth';
 
-class SessionController {
+class SessionAdminController {
   async store(req, res) {
     const { email, password } = req.body;
 
-    const user = await User.findOne({
+    const user = await AdminUser.findOne({
       where: { email },
     });
 
@@ -33,4 +33,4 @@ class SessionController {
   }
 }
 
-export default new SessionController();
+export default new SessionAdminController();

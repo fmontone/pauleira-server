@@ -1,42 +1,27 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('galleries', {
+    return queryInterface.createTable('admin_profile_images', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
-        type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      likes: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-      },
-      status: {
+      url: {
         type: Sequelize.STRING,
         allowNull: false,
-        defaultValue: 'Draft', // Draft - Public
+        unique: true,
       },
       user_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
+        references: { model: 'admin_users', key: 'id' },
+        unique: true,
+        allowNull: false,
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        allowNull: false,
-      },
-      made_by: {
-        type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        allowNull: false,
       },
       created_at: {
         type: Sequelize.DATE,
@@ -50,6 +35,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('galleries');
+    return queryInterface.dropTable('admin_profile_images');
   },
 };

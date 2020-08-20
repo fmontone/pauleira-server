@@ -1,27 +1,22 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('gallery_images', {
+    return queryInterface.createTable('admin_users', {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
-      title: {
+      name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      description: {
-        type: Sequelize.STRING,
-      },
-      url: {
+      email: {
         type: Sequelize.STRING,
         allowNull: false,
+        unique: true,
       },
-      gallery_id: {
-        type: Sequelize.INTEGER,
-        references: { model: 'galleries', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+      password_hash: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {
@@ -36,6 +31,6 @@ module.exports = {
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('gallery_images');
+    return queryInterface.dropTable('admin_users');
   },
 };
