@@ -49,7 +49,7 @@ const storageTypes = {
   s3: multerS3({
     s3: new aws.S3(),
     bucket: (req, file, cb) => {
-      const bucketFolder = `pauleiraimages/admin-galleries/${req.params.gallery_id}`;
+      const bucketFolder = `${process.env.S3_IMAGES_BUCKET}/admin-galleries/${req.params.gallery_id}`;
 
       return cb(null, bucketFolder);
     },
@@ -59,8 +59,6 @@ const storageTypes = {
       const sanitizedName = file.originalname.replace(/\s/g, '_');
 
       const fileName = `${Date.now().toString()}_${sanitizedName}`;
-
-      console.log('= = = = = = FILENAME ', fileName);
 
       return cb(null, fileName);
     },
