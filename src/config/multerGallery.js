@@ -7,6 +7,14 @@ import multerS3 from 'multer-s3';
 const storageTypes = {
   local: multer.diskStorage({
     destination: (req, file, cb) => {
+      const baseDir = resolve(
+        __dirname,
+        '..',
+        '..',
+        'uploads',
+        'admin-galleries'
+      );
+
       const dir =
         process.env.NODE_ENV === 'test'
           ? resolve(
@@ -17,14 +25,11 @@ const storageTypes = {
               'imgs-gallery',
               req.params.gallery_id
             )
-          : resolve(
-              __dirname,
-              '..',
-              '..',
-              'uploads',
-              'galleries',
-              req.params.gallery_id
-            );
+          : resolve(baseDir, req.params.gallery_id);
+
+      if (!fs.existsSync(baseDir)) {
+        fs.mkdirSync(baseDir);
+      }
 
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
@@ -44,16 +49,18 @@ const storageTypes = {
   s3: multerS3({
     s3: new aws.S3(),
     bucket: (req, file, cb) => {
-      const bucketFolder = `pauleiraimages/gallery-${req.params.gallery_id}`;
+      const bucketFolder = `pauleiraimages/admin-galleries/${req.params.gallery_id}`;
 
       return cb(null, bucketFolder);
     },
     contentType: multerS3.AUTO_CONTENT_TYPE,
     acl: 'public-read',
     key: (req, file, cb) => {
-      const sanitizedName = file.originalname.replace(/\s/g, '-');
+      const sanitizedName = file.originalname.replace(/\s/g, '_');
 
-      const fileName = `${Date.now().toString()}-${sanitizedName}`;
+      const fileName = `${Date.now().toString()}_${sanitizedName}`;
+
+      console.log('= = = = = = FILENAME ', fileName);
 
       return cb(null, fileName);
     },

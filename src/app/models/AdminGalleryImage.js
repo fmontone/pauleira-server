@@ -6,26 +6,26 @@ import aws from 'aws-sdk';
 
 const s3 = new aws.S3();
 
-class GalleryImage extends Model {
+class AdminGalleryImage extends Model {
   static init(sequelize) {
     super.init(
       {
         title: Sequelize.STRING,
         description: Sequelize.STRING,
         url: Sequelize.STRING,
+        position: Sequelize.INTEGER,
         key: Sequelize.VIRTUAL(),
       },
       {
         hooks: {
           beforeDestroy: (image, options) => { // eslint-disable-line
-
             const imageUrl = image.url.split('/');
             const imageName = imageUrl[imageUrl.length - 1];
 
             if (process.env.STORAGE_TYPE === 's3') {
               return s3
                 .deleteObject({
-                  Bucket: `pauleiraimages/gallery-${image.gallery_id}`,
+                  Bucket: `pauleiraimages/admin-galleries/${image.gallery_id}`,
                   Key: imageName,
                 })
                 .promise();
@@ -37,7 +37,7 @@ class GalleryImage extends Model {
                 '..',
                 '..',
                 'uploads',
-                'galleries',
+                'admin-galleries',
                 String(image.gallery_id),
                 imageName
               )
@@ -52,8 +52,11 @@ class GalleryImage extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.Gallery, { foreignKey: 'gallery_id', as: 'images' });
+    this.belongsTo(models.AdminGallery, {
+      foreignKey: 'gallery_id',
+      as: 'images',
+    });
   }
 }
 
-export default GalleryImage;
+export default AdminGalleryImage;

@@ -4,8 +4,10 @@ import databaseConfig from '../config/database';
 
 import AdminUser from '../app/models/AdminUser';
 import AdminProfileImage from '../app/models/AdminProfileImage';
+import AdminGallery from '../app/models/AdminGallery';
+import AdminGalleryImage from '../app/models/AdminGalleryImage';
 
-const models = [AdminUser, AdminProfileImage];
+const models = [AdminUser, AdminProfileImage, AdminGallery, AdminGalleryImage];
 
 class Database {
   constructor() {

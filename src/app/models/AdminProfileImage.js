@@ -15,15 +15,16 @@ class AdminProfileImage extends Model {
       },
       {
         hooks: {
-          beforeDestroy: (image, options) => { // eslint-disable-line
+          beforeDestroy: image => {
             if (process.env.STORAGE_TYPE === 's3') {
               return s3
                 .deleteObject({
-                  Bucket: 'pauleiraimages/admin-profile',
+                  Bucket: 'pauleiraimages/admin-profile-images',
                   Key: image.name,
                 })
                 .promise();
             }
+
             return promisify(fs.unlink)(
               path.resolve(
                 __dirname,
@@ -31,7 +32,7 @@ class AdminProfileImage extends Model {
                 '..',
                 '..',
                 'uploads',
-                'admin-profile',
+                'admin-profile-images',
                 image.name
               )
             );

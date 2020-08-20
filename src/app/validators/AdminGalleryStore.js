@@ -8,7 +8,6 @@ export default async (req, res, next) => {
       likes: Yup.string(),
       status: Yup.string(),
       user_id: Yup.number().required(),
-      made_by: Yup.number().required(),
     });
 
     await schema.validate(req.body, { abortEarly: false });

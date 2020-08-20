@@ -1,30 +1,32 @@
 import { Router } from 'express';
 import multer from 'multer';
 import multerProfileConfig from './config/multerProfile';
-// import multerGalleryConfig from './config/multerGallery';
+import multerGalleryConfig from './config/multerGallery';
 
 import AdminUserController from './app/controllers/AdminUserController';
-import SessionAdminController from './app/controllers/AdminSessionController';
-import ProfileImageController from './app/controllers/AdminProfileImageController';
+import AdminSessionController from './app/controllers/AdminSessionController';
+import AdminProfileImageController from './app/controllers/AdminProfileImageController';
+import AdminGalleryController from './app/controllers/AdminGalleryController';
+import AdminGalleryImageController from './app/controllers/AdminGalleryImageController';
 
 import validateUserAdminStore from './app/validators/AdminUserStore';
 import validateUserAdminUpdate from './app/validators/AdminUserUpdate';
-// import validateGalleryStore from './app/validators/GalleryStore';
-// import validateGalleryUpdate from './app/validators/GalleryUpdate';
+import validateAdminGalleryStore from './app/validators/AdminGalleryStore';
+import validateAdminGalleryUpdate from './app/validators/AdminGalleryUpdate';
 
 import AuthMiddleware from './app/middlewares/auth';
 
 const routes = new Router();
 
-const uploadProfile = multer(multerProfileConfig);
-// const uploadGallery = multer(multerGalleryConfig);
+const storeProfile = multer(multerProfileConfig);
+const storeGallery = multer(multerGalleryConfig);
 
 // OPEN ROUTES
 
-// // 1. Gallery | INDEX
-// routes.get('/galleries', GalleryController.index);
-// // 2. Gallery | SHOW
-// routes.get('/galleries/:id', GalleryController.show);
+// 1. Gallery | INDEX
+routes.get('/galleries', AdminGalleryController.index);
+// 2. Gallery | SHOW
+routes.get('/galleries/:id', AdminGalleryController.show);
 
 // // 3. GalleryLikes | UPDATE
 // routes.put(
@@ -34,7 +36,7 @@ const uploadProfile = multer(multerProfileConfig);
 
 // SESSION
 
-routes.post('/session-admin', SessionAdminController.store);
+routes.post('/session-admin', AdminSessionController.store);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -42,6 +44,12 @@ routes.post('/session-admin', SessionAdminController.store);
 routes.use(AuthMiddleware);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+/**
+ * -----------------------------
+ * Admin Users
+ * -----------------------------
+ */
 
 // 1. ADMIN Users | INDEX
 routes.get('/admin-users', AdminUserController.index);
@@ -59,60 +67,77 @@ routes.put(
 routes.delete('/admin-users/:id', AdminUserController.delete);
 
 /**
- *
- *
+ * -----------------------------
  * Admin Profile Images
- *
- *
+ * -----------------------------
  */
 
 // 1. Profile Image | STORE
 routes.post(
-  '/admin-users/:user_id/profile-img',
-  uploadProfile.single('file'),
-  ProfileImageController.store
+  '/admin-users/profile-img/:user_id',
+  storeProfile.single('file'),
+  AdminProfileImageController.store
 );
 
 // 1. Profile Image | SHOW
-routes.get('/admin-users/:user_id/profile-img', ProfileImageController.show);
+routes.get(
+  '/admin-users/profile-img/:user_id',
+  AdminProfileImageController.show
+);
 
 // 2. Profile Image | DELETE
 routes.delete(
-  '/admin-users/:user_id/profile-img',
-  ProfileImageController.delete
+  '/admin-users/profile-img/:user_id',
+  AdminProfileImageController.delete
 );
 
 /**
- *
- *
+ * -----------------------------
  * Admin Galleries
- *
- *
+ * -----------------------------
  */
 
-// // 1. Gallery | STORE
-// routes.post('/galleries', validateGalleryStore, GalleryController.store);
-// // 2. Gallery | UPDATE
-// routes.put('/galleries/:id', validateGalleryUpdate, GalleryController.update);
-// // 3. Gallery | DELETE
-// routes.delete('/galleries/:id', GalleryController.delete);
+// 1. Gallery | STORE
+routes.post(
+  '/galleries',
+  validateAdminGalleryStore,
+  AdminGalleryController.store
+);
+// 2. Gallery | UPDATE
+routes.put(
+  '/galleries/:id',
+  validateAdminGalleryUpdate,
+  AdminGalleryController.update
+);
+// 3. Gallery | DELETE
+routes.delete('/galleries/:id', AdminGalleryController.delete);
 
-// // 1. GalleryImage | INDEX
-// routes.get('/galleries/:gallery_id/images', GalleryImageController.index);
-// // 2. GalleryImage | SHOW
-// routes.get('/galleries/:gallery_id/:image_id', GalleryImageController.show);
-// // 3. GalleryImage | STORE
-// routes.post(
-//   '/galleries/:gallery_id/gallery-img',
-//   uploadGallery.single('file'),
-//   GalleryImageController.store
-// );
-// // 4. GalleryImage | UPDATE
-// routes.put('/galleries/:gallery_id/:image_id', GalleryImageController.update);
-// // 5. GalleryImage | DELETE
-// routes.delete(
-//   '/galleries/:gallery_id/:image_id',
-//   GalleryImageController.delete
-// );
+/**
+ * -----------------------------
+ * Admin Gallery Images
+ * -----------------------------
+ */
+
+// 1. GalleryImage | INDEX
+routes.get('/galleries/images/:gallery_id', AdminGalleryImageController.index);
+
+// 3. GalleryImage | STORE
+routes.post(
+  '/galleries/add-img/:gallery_id/:position',
+  storeGallery.single('file'),
+  AdminGalleryImageController.store
+);
+
+// 4. GalleryImage | UPDATE
+routes.put(
+  '/galleries/images/:gallery_id/:image_id',
+  AdminGalleryImageController.update
+);
+
+// 5. GalleryImage | DELETE
+routes.delete(
+  '/galleries/remove-img/:gallery_id/:image_id',
+  AdminGalleryImageController.delete
+);
 
 export default routes;
