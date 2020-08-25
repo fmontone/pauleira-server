@@ -9,8 +9,6 @@ class AdminUserActivateController {
     const { email } = req.body;
     const { reset } = req.query;
 
-    console.log('>>> RESET >>>', reset);
-
     const user = await AdminUser.findOne({
       where: { email },
     });
