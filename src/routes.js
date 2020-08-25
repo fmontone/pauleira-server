@@ -4,6 +4,7 @@ import multerProfileConfig from './config/multerProfile';
 import multerGalleryConfig from './config/multerGallery';
 
 import AdminUserController from './app/controllers/AdminUserController';
+import AdminUserActivateController from './app/controllers/AdminUserActivateController';
 import AdminSessionController from './app/controllers/AdminSessionController';
 import AdminProfileImageController from './app/controllers/AdminProfileImageController';
 import AdminGalleryController from './app/controllers/AdminGalleryController';
@@ -21,20 +22,19 @@ const routes = new Router();
 const storeProfile = multer(multerProfileConfig);
 const storeGallery = multer(multerGalleryConfig);
 
-// OPEN ROUTES
+/**
+ * -----------------------------
+ * [OPEN] Admin Users - PassReset
+ * -----------------------------
+ */
 
-// 1. Gallery | INDEX
-routes.get('/galleries', AdminGalleryController.index);
-// 2. Gallery | SHOW
-routes.get('/galleries/:id', AdminGalleryController.show);
+routes.put('/admin-users/activate/', AdminUserActivateController.update);
 
-// // 3. GalleryLikes | UPDATE
-// routes.put(
-//   '/galleries/:gallery_id/likes/:total_likes',
-//   GalleryLikeController.update
-// );
-
-// SESSION
+/**
+ * -----------------------------
+ * [OPEN] SESSION
+ * -----------------------------
+ */
 
 routes.post('/session-admin', AdminSessionController.store);
 
@@ -96,6 +96,17 @@ routes.delete(
  * Admin Galleries
  * -----------------------------
  */
+
+// 1. Gallery | INDEX
+routes.get('/galleries', AdminGalleryController.index);
+// 2. Gallery | SHOW
+routes.get('/galleries/:id', AdminGalleryController.show);
+
+// // 3. GalleryLikes | UPDATE
+// routes.put(
+//   '/galleries/:gallery_id/likes/:total_likes',
+//   GalleryLikeController.update
+// );
 
 // 1. Gallery | STORE
 routes.post(
