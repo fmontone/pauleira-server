@@ -4,7 +4,7 @@ import AdminUser from '../models/AdminUser';
 import adminUserActivateConfig from '../../config/adminUserActivateConfig';
 import sendEmail from '../../config/nodeMailer';
 
-class AdminUserActivateController {
+class AdminUserPassForgotController {
   async update(req, res) {
     const { email } = req.body;
 
@@ -34,20 +34,19 @@ class AdminUserActivateController {
     }
 
     try {
-      const link = `${process.env.CLIENT_ADMIN_URL}/admin-users/activate/${id}/${token}`;
-      const subject = 'Ativar sua conta';
+      const link = `${process.env.CLIENT_ADMIN_URL}/admin-users/pass-reset/${id}/${token}`;
+      const subject = 'Recupere sua Senha';
 
       const text = `
-      Seu email foi adicionado como Usuário Administrativo no site da Pauleira. Clique no link abaixo - ou copie e cole o código do link em seu navegador - para ativar sua conta:
+      Clique no link abaixo - ou copie e cole o código do link em seu navegador -  para recuperar sua senha na área administrativa da Pauleira:
       ${link}
     `;
       const html = `
-      <h2>Instruções para ativação</h2>
-      Seu email foi adicionado como Usuário Administrativo no site da Pauleira. Clique no link abaixo - ou copie e cole o código do link em seu navegador - para ativar sua conta:
-      <p>Clique no link abaixo - ou copie e cole o código do link em seu navegador -  para recuperar sua senha na área administrativa da Pauleira:</p>
-        <a href="${link}">${link}</a>
-    `;
-      await sendEmail(email, subject, text, html);
+          <h3>Recupere sua senha</h3>
+          <p>Clique no link abaixo - ou copie e cole o código do link em seu navegador -  para recuperar sua senha na área administrativa da Pauleira:</p>
+          <a href="${link}">${link}</a>
+      `;
+      await sendEmail(null, subject, text, html);
     } catch (err) {
       return res.status(400).json({ error: 'Fail Sending email' });
     }
@@ -56,4 +55,4 @@ class AdminUserActivateController {
   }
 }
 
-export default new AdminUserActivateController();
+export default new AdminUserPassForgotController();
