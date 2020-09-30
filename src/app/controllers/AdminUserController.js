@@ -56,7 +56,7 @@ class AdminUserController {
         where: { email: req.body.email },
       });
 
-      if (emailExists) {
+      if (emailExists && emailExists.id !== req.params.id) {
         return res
           .status(400)
           .json({ error: 'User Already registered with this e-mail.' });

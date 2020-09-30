@@ -5,9 +5,6 @@ class AdminGalleryImageController {
   async index(req, res) {
     const { gallery_id } = req.params;
 
-    /**
-     * First we check if gallery exixts
-     */
     const gallery = await AdminGallery.findOne({
       where: { id: gallery_id },
     });
@@ -50,7 +47,7 @@ class AdminGalleryImageController {
       description,
       gallery_id,
       url,
-      position,
+      position: Number(position),
     });
 
     return res.json(image);

@@ -4,6 +4,9 @@ import multerProfileConfig from './config/multerProfile';
 import multerGalleryConfig from './config/multerGallery';
 
 import AdminUserController from './app/controllers/AdminUserController';
+import AdminUserActivateController from './app/controllers/AdminUserActivateController';
+import AdminUserPassForgotController from './app/controllers/AdminUserPassForgotController';
+import AdminUserPassResetController from './app/controllers/AdminUserPassResetController';
 import AdminSessionController from './app/controllers/AdminSessionController';
 import AdminProfileImageController from './app/controllers/AdminProfileImageController';
 import AdminGalleryController from './app/controllers/AdminGalleryController';
@@ -21,20 +24,27 @@ const routes = new Router();
 const storeProfile = multer(multerProfileConfig);
 const storeGallery = multer(multerGalleryConfig);
 
-// OPEN ROUTES
+/**
+ * ----------------------------------------------------------------------------
+ * [OPEN] Admin Users - Pass Forgot / PassReset / Activate Account
+ * ----------------------------------------------------------------------------
+ */
 
-// 1. Gallery | INDEX
-routes.get('/galleries', AdminGalleryController.index);
-// 2. Gallery | SHOW
-routes.get('/galleries/:id', AdminGalleryController.show);
+routes.put('/admin-users/pass-forgot/', AdminUserPassForgotController.update);
+routes.put('/admin-users/activate/', AdminUserActivateController.update);
 
-// // 3. GalleryLikes | UPDATE
-// routes.put(
-//   '/galleries/:gallery_id/likes/:total_likes',
-//   GalleryLikeController.update
-// );
+routes.get(
+  '/admin-users/pass-reset/:id/:token',
+  AdminUserPassResetController.show
+);
 
-// SESSION
+routes.put('/admin-users/pass-reset/:id', AdminUserPassResetController.update);
+
+/**
+ * ----------------------------------------------------------------------------
+ * [OPEN] SESSION
+ * ----------------------------------------------------------------------------
+ */
 
 routes.post('/session-admin', AdminSessionController.store);
 
@@ -46,9 +56,9 @@ routes.use(AuthMiddleware);
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 /**
- * -----------------------------
+ * ----------------------------------------------------------------------------
  * Admin Users
- * -----------------------------
+ * ----------------------------------------------------------------------------
  */
 
 // 1. ADMIN Users | INDEX
@@ -67,9 +77,9 @@ routes.put(
 routes.delete('/admin-users/:id', AdminUserController.delete);
 
 /**
- * -----------------------------
+ * ----------------------------------------------------------------------------
  * Admin Profile Images
- * -----------------------------
+ * ----------------------------------------------------------------------------
  */
 
 // 1. Profile Image | STORE
@@ -92,10 +102,21 @@ routes.delete(
 );
 
 /**
- * -----------------------------
+ * ----------------------------------------------------------------------------
  * Admin Galleries
- * -----------------------------
+ * ----------------------------------------------------------------------------
  */
+
+// 1. Gallery | INDEX
+routes.get('/galleries', AdminGalleryController.index);
+// 2. Gallery | SHOW
+routes.get('/galleries/:id', AdminGalleryController.show);
+
+// // 3. GalleryLikes | UPDATE
+// routes.put(
+//   '/galleries/:gallery_id/likes/:total_likes',
+//   GalleryLikeController.update
+// );
 
 // 1. Gallery | STORE
 routes.post(
@@ -113,9 +134,9 @@ routes.put(
 routes.delete('/galleries/:id', AdminGalleryController.delete);
 
 /**
- * -----------------------------
+ * ----------------------------------------------------------------------------
  * Admin Gallery Images
- * -----------------------------
+ * ----------------------------------------------------------------------------
  */
 
 // 1. GalleryImage | INDEX
