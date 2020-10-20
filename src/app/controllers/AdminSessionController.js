@@ -26,7 +26,6 @@ class SessionAdminController {
       user: {
         id,
         name,
-        email,
       },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
