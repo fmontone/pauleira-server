@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 
 import AdminUser from '../models/AdminUser';
+import AdminProfileImage from '../models/AdminProfileImage';
 
 import authConfig from '../../config/auth';
 
@@ -10,6 +11,13 @@ class SessionAdminController {
 
     const user = await AdminUser.findOne({
       where: { email },
+      include: [
+        {
+          model: AdminProfileImage,
+          as: 'profile_image',
+          attributes: ['url'],
+        },
+      ],
     });
 
     if (!user) {
@@ -19,6 +27,8 @@ class SessionAdminController {
     if (!(await user.checkPassword(password))) {
       return res.status(403).json({ error: 'Password does not match' });
     }
+
+    console.log('>>>>>USER>>>>>', user);
 
     const { id, name, profile_image } = user;
 
