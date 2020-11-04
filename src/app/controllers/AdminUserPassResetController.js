@@ -11,7 +11,6 @@ class AdminUserPassResetController {
     try {
       await promisify(jwt.verify)(token, adminUserActivateConfig.secret);
     } catch (err) {
-      console.log('# # # TOKEN ERROR', err);
       return res.status(401).json({ error: 'Token Invalid' });
     }
 
@@ -30,8 +29,6 @@ class AdminUserPassResetController {
     const { id, password } = req.body;
 
     const user = await AdminUser.findByPk(id);
-
-    console.log('&&&&&&&&& ID >>> ', id);
 
     await user.update({
       password,
