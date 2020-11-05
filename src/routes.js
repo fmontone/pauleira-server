@@ -48,6 +48,11 @@ routes.put('/admin-users/pass-reset/:id', AdminUserPassResetController.update);
 
 routes.post('/session-admin', AdminSessionController.store);
 
+// 1. Gallery | INDEX
+routes.get('/galleries', AdminGalleryController.index);
+// 2. Gallery | SHOW
+routes.get('/galleries/:id', AdminGalleryController.show);
+
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
 // AUTH middleware
@@ -106,11 +111,6 @@ routes.delete(
  * Admin Galleries
  * ----------------------------------------------------------------------------
  */
-
-// 1. Gallery | INDEX
-routes.get('/galleries', AdminGalleryController.index);
-// 2. Gallery | SHOW
-routes.get('/galleries/:id', AdminGalleryController.show);
 
 // // 3. GalleryLikes | UPDATE
 // routes.put(
