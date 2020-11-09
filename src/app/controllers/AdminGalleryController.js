@@ -5,6 +5,7 @@ import aws from 'aws-sdk';
 import AdminGallery from '../models/AdminGallery';
 import AdminGalleryImage from '../models/AdminGalleryImage';
 import AdminUser from '../models/AdminUser';
+import AdminProfileImage from '../models/AdminProfileImage';
 
 const s3 = new aws.S3();
 
@@ -16,6 +17,13 @@ class AdminGalleryController {
           model: AdminUser,
           as: 'user',
           attributes: ['name'],
+          include: [
+            {
+              model: AdminProfileImage,
+              as: 'profile_image',
+              attributes: ['url'],
+            },
+          ],
         },
         {
           model: AdminGalleryImage,
@@ -34,6 +42,13 @@ class AdminGalleryController {
           model: AdminUser,
           as: 'user',
           attributes: ['name'],
+          include: [
+            {
+              model: AdminProfileImage,
+              as: 'profile_image',
+              attributes: ['url'],
+            },
+          ],
         },
         {
           model: AdminGalleryImage,
