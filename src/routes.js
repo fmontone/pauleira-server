@@ -11,6 +11,7 @@ import AdminSessionController from './app/controllers/AdminSessionController';
 import AdminProfileImageController from './app/controllers/AdminProfileImageController';
 import AdminGalleryController from './app/controllers/AdminGalleryController';
 import AdminGalleryImageController from './app/controllers/AdminGalleryImageController';
+import AdminGalleryLikeController from './app/controllers/AdminGalleryLikeController';
 
 import validateUserAdminStore from './app/validators/AdminUserStore';
 import validateUserAdminUpdate from './app/validators/AdminUserUpdate';
@@ -52,6 +53,11 @@ routes.post('/session-admin', AdminSessionController.store);
 routes.get('/galleries', AdminGalleryController.index);
 // 2. Gallery | SHOW
 routes.get('/galleries/:id', AdminGalleryController.show);
+// 3. GalleryLikes | UPDATE
+routes.put(
+  '/galleries/:gallery_id/likes/:total_likes',
+  AdminGalleryLikeController.update
+);
 
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<< MOSTRA A PULSEIRA >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -111,12 +117,6 @@ routes.delete(
  * Admin Galleries
  * ----------------------------------------------------------------------------
  */
-
-// // 3. GalleryLikes | UPDATE
-// routes.put(
-//   '/galleries/:gallery_id/likes/:total_likes',
-//   GalleryLikeController.update
-// );
 
 // 1. Gallery | STORE
 routes.post(
