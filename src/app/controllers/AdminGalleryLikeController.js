@@ -1,10 +1,10 @@
-import Gallery from '../models/Gallery';
+import AdminGallery from '../models/AdminGallery';
 
 class GalleryLikesController {
   async update(req, res) {
     const { gallery_id, total_likes } = req.params;
 
-    const gallery = await Gallery.findByPk(gallery_id);
+    const gallery = await AdminGallery.findByPk(gallery_id);
 
     const updateLikes = Number(gallery.likes) + Number(total_likes);
 
